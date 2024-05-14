@@ -3,18 +3,33 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
 import { submitJobForm } from "../utils/submitJobForm";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+} from "@mui/material";
 
 interface FormData {
   title: string;
-  description: string;
-  requirements: string;
+  short_description: string;
+  full_description: string;
+  location: string;
+  salary: number;
+  compani_id: number;
+  publication_date: Date;
 }
 
 const JobForm: React.FC = () => {
   const [formData, setFormData] = React.useState<FormData>({
     title: "",
-    description: "",
-    requirements: "",
+    short_description: "",
+    full_description: "",
+    location: "",
+    salary: 0,
+    compani_id: 1,
+    publication_date: new Date(),
   });
 
   const handleChange = (
@@ -23,15 +38,23 @@ const JobForm: React.FC = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await submitJobForm(formData); // Использование вынесенной функции
+    await submitJobForm(formData);
     setFormData({
       title: "",
-      description: "",
-      requirements: "",
-    }); // Очистка формы
+      short_description: "",
+      full_description: "",
+      location: "",
+      salary: 0,
+      compani_id: 0,
+      publication_date: new Date(),
+    }); // Clear Form
   };
 
   return (
@@ -49,7 +72,7 @@ const JobForm: React.FC = () => {
         <TextField
           fullWidth
           name="title"
-          label="Название вакансии"
+          label="Offer title"
           variant="outlined"
           margin="normal"
           value={formData.title}
@@ -57,28 +80,61 @@ const JobForm: React.FC = () => {
         />
         <TextField
           fullWidth
-          name="description"
-          label="Описание"
+          name="short_description"
+          label="Short Description"
           multiline
           rows={4}
           variant="outlined"
           margin="normal"
-          value={formData.description}
+          value={formData.short_description}
           onChange={handleChange}
         />
         <TextField
           fullWidth
-          name="requirements"
-          label="Требования"
+          name="full_description"
+          label="Full Description"
           multiline
           rows={4}
           variant="outlined"
           margin="normal"
-          value={formData.requirements}
+          value={formData.full_description}
           onChange={handleChange}
         />
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="location-label">Location</InputLabel>
+          <Select
+            labelId="location-label"
+            id="location-select"
+            name="location"
+            value={formData.location}
+            label="Location"
+            style={{ textAlign: "left", textOverflow: "clip" }}
+            onChange={handleSelectChange}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value="new-york">New York</MenuItem>
+            <MenuItem value="san-francisco">San Francisco</MenuItem>
+            <MenuItem value="berlin">Berlin</MenuItem>
+            <MenuItem value="london">London</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          fullWidth
+          name="salary"
+          label="Salary"
+          type="number"
+          variant="outlined"
+          margin="normal"
+          value={formData.salary}
+          onChange={handleChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
         <Button type="submit" variant="contained" color="primary">
-          Создать вакансию
+          Create Job Offer
         </Button>
       </form>
     </Box>
