@@ -9,11 +9,10 @@ interface FormData {
   }
   
   export const submitJobForm = async (formData: FormData): Promise<void> => {
-    // Setting publication_date here ensures it's as close to the actual submission time as possible
-    formData.publication_date = new Date();
+   formData.publication_date = new Date();
   
     try {
-      const response = await fetch('http://localhost:3000/api/jobs', {
+      const response = await fetch('http://localhost:3000/api/add_job', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

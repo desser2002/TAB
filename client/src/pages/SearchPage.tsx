@@ -1,16 +1,29 @@
 // SearchPage.tsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Box } from "@mui/material";
 import StyledHeader from "../components/StyledHeader";
 import JobCard from "../components/JobCard";
-
-const examples = Array.from({ length: 10 }, (_, i) => ({
-  title: `Programista ${i + 1}`,
-  description: "Description",
-  location: "Katowice",
-}));
+import { getJobOffer, JobOffer } from "../utils/getJobOffers";
 
 const SearchPage: React.FC = () => {
+  // Define the state with the type expected to be an array of JobOffer
+  const [jobOffers, setJobOffers] = useState<JobOffer[]>([]);
+
+  // Fetch job offers when component mounts
+  useEffect(() => {
+    const fetchJobOffers = async () => {
+      try {
+        const offers = await getJobOffer(); // Call your async function
+        setJobOffers(offers); // Store the fetched offers in state
+      } catch (error) {
+        console.error("Failed to fetch job offers:", error);
+        // Optionally handle errors, e.g., show an error message in UI
+      }
+    };
+
+    fetchJobOffers();
+  }, []); // Empty dependency array to only run once on mount
+
   return (
     <>
       <StyledHeader />
@@ -19,12 +32,12 @@ const SearchPage: React.FC = () => {
           marginLeft: "5vw",
           display: "flex",
           justifyContent: "center",
-          alignItems: "center", // Centers vertically
-          minHeight: "90vh", // Takes minimum 90% of the viewport height
+          alignItems: "center",
+          minHeight: "90vh",
         }}
       >
         <Grid container spacing={2}>
-          {examples.map((offer, index) => (
+          {jobOffers.map((offer, index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
               <JobCard offer={offer} />
             </Grid>

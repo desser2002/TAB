@@ -9,8 +9,10 @@ import {
 
 interface Offer {
   title: string;
-  description: string;
+  short_description: string;
   location: string;
+  salary: number;
+  publication_date: Date;
 }
 
 interface JobCardProps {
@@ -25,7 +27,7 @@ const JobCard: React.FC<JobCardProps> = ({ offer }) => {
           {offer.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {offer.description}
+          {offer.short_description}
         </Typography>
         <Typography variant="body1" color="text.primary">
           Location: {offer.location}
