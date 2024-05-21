@@ -5,7 +5,7 @@ export interface JobOffer {
     full_description: string;
     location: string;
     salary: number;
-    compani_id: number;
+    company: number;
     publication_date: Date;
 }
 

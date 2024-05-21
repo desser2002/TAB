@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Job, IJob } from '../models/Job';
+import { Job } from '../models/Job';
 
 export const createOffer = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -21,3 +21,17 @@ export const getAllOffers = async (req:Request, res: Response): Promise<void> =>
       res.status(500).send("Failed to fetch jobs. Error: " + error.message);
     }
   }
+  export const findOfferById = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const job = await Job.findById(req.params.id); // Fetch the job by ID from the jobs collection
+
+        if (!job) {
+            res.status(404).send("Job not found");
+            return;
+        }
+
+        res.json(job); // Send the retrieved job as a JSON response
+    } catch (error) {
+        res.status(500).send("Failed to fetch job. Error: " + error.message);
+    }
+};

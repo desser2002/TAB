@@ -17,7 +17,7 @@ interface FormData {
   full_description: string;
   location: string;
   salary: number;
-  compani_id: number;
+  company: string;
   publication_date: Date;
 }
 
@@ -28,7 +28,7 @@ const JobForm: React.FC = () => {
     full_description: "",
     location: "",
     salary: 0,
-    compani_id: 1,
+    company: "664c5b4b66a54cd11e8bf2fd",
     publication_date: new Date(),
   });
 
@@ -52,7 +52,7 @@ const JobForm: React.FC = () => {
       full_description: "",
       location: "",
       salary: 0,
-      compani_id: 0,
+      company: "664c5b4b66a54cd11e8bf2fd",
       publication_date: new Date(),
     }); // Clear Form
   };
@@ -114,10 +114,8 @@ const JobForm: React.FC = () => {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value="new-york">New York</MenuItem>
-            <MenuItem value="san-francisco">San Francisco</MenuItem>
-            <MenuItem value="berlin">Berlin</MenuItem>
-            <MenuItem value="london">London</MenuItem>
+            <MenuItem value="Katowie">Katowie</MenuItem>
+            <MenuItem value="Gliwice">Gliwice</MenuItem>
           </Select>
         </FormControl>
         <TextField

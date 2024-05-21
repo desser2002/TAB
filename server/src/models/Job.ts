@@ -1,4 +1,6 @@
+// Job.ts
 import mongoose, { Document, Schema } from 'mongoose';
+import { ICompany } from './Company';
 
 export interface IJob extends Document {
   title: string;
@@ -6,18 +8,18 @@ export interface IJob extends Document {
   full_description: string;
   location: string;
   salary: number;
-  compani_id: number;
-  publication_date: Date
+  company: ICompany['_id'];
+  publication_date: Date;
 }
 
 const jobSchema: Schema = new Schema({
   title: { type: String, required: true },
   short_description: { type: String, required: true },
   full_description: { type: String, required: true },
-  location: { type: String, required: true }, // Define location as a required string
-  salary: { type: Number, required: true },   // Define salary as a required number
-  compani_id: { type: Number, required: true }, // Define company ID as a required number
-  publication_date: { type: Date, required: true } // Define publication date as a required date
+  location: { type: String, required: true },
+  salary: { type: Number, required: true },
+  company: { type: Schema.Types.ObjectId, ref: 'Company', required: true },
+  publication_date: { type: Date, required: true }
 });
 
 export const Job = mongoose.model<IJob>('Job', jobSchema);
