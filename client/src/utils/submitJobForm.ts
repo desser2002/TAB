@@ -4,7 +4,7 @@ interface FormData {
   full_description: string;
   location: string;
   salary: number;
-  compani_id: number;
+  company: string;
   publication_date: Date;
   }
   
@@ -19,7 +19,7 @@ interface FormData {
         },
         body: JSON.stringify(formData)
       });
-  
+      console.log (formData)
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }

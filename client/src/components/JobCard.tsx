@@ -6,8 +6,10 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface Offer {
+  _id: string;
   title: string;
   short_description: string;
   location: string;
@@ -20,6 +22,11 @@ interface JobCardProps {
 }
 
 const JobCard: React.FC<JobCardProps> = ({ offer }) => {
+  const navigate = useNavigate(); // Hook for navigation
+
+  const handleApplyClick = () => {
+    navigate(`/offer/${offer._id}`); // Navigates to the detailed offer page
+  };
   return (
     <Card sx={{ maxWidth: "30vw", marginBottom: 2 }}>
       <CardContent>
@@ -34,7 +41,9 @@ const JobCard: React.FC<JobCardProps> = ({ offer }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Apply Now</Button>
+        <Button size="small" onClick={handleApplyClick}>
+          Apply Now
+        </Button>
       </CardActions>
     </Card>
   );
