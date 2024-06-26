@@ -1,24 +1,32 @@
-import express, { Express } from 'express';
+// app.ts или server.ts
+import express from 'express';
 import mongoose from 'mongoose';
+import fs from 'fs';
+import path from 'path';
 import cors from 'cors';
-import jobRoutes from "../src/routes/JobRoutes";
-import companyRoutes from './routes/companyRoutes';
+import fileRoutes from './routes/fileRoutes'; // Импорт нового файла маршрутов
+import jobRoutes from './routes/JobRoutes';
+import companyRoutes from './routes/CompanyRoutes';
 
-
-const app: Express = express();
+const app: express.Express = express();
 const port: number = 3000;
+const uploadDir = path.join(__dirname, 'uploads');
 
-// Настройка CORS
+// Проверяем, существует ли директория, и создаем ее, если необходимо
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+    console.log(`Directory created at ${uploadDir}`);
+} else {
+    console.log(`Directory already exists at ${uploadDir}`);
+}
+
 app.use(cors());
-
-// Разбор JSON-запросов с помощью встроенного middleware Express
 app.use(express.json());
 
-// Подключение маршрутов
 app.use('/api', jobRoutes);
 app.use('/api', companyRoutes);
+app.use('/api/files', fileRoutes); // Использование нового файла маршрутов
 
-// Подключение к MongoDB
 mongoose.connect('mongodb://localhost/yourdbname', {})
   .then(() => {
     app.listen(port, () => {
@@ -28,4 +36,3 @@ mongoose.connect('mongodb://localhost/yourdbname', {})
   .catch(err => {
     console.error('Database connection failed', err);
   });
-  
