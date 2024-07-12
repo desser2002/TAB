@@ -1,4 +1,3 @@
-// app.ts или server.ts
 import express from 'express';
 import mongoose from 'mongoose';
 import fs from 'fs';
@@ -7,6 +6,7 @@ import cors from 'cors';
 import fileRoutes from './routes/fileRoutes'; // Импорт нового файла маршрутов
 import jobRoutes from './routes/JobRoutes';
 import companyRoutes from './routes/CompanyRoutes';
+import userRoutes from './routes/UserRoutes';  // Импорт маршрутов пользователя
 
 const app: express.Express = express();
 const port: number = 3000;
@@ -26,6 +26,7 @@ app.use(express.json());
 app.use('/api', jobRoutes);
 app.use('/api', companyRoutes);
 app.use('/api/files', fileRoutes); // Использование нового файла маршрутов
+app.use('/api/users', userRoutes); // Использование правильного файла маршрутов пользователя
 
 mongoose.connect('mongodb://localhost/yourdbname', {})
   .then(() => {
