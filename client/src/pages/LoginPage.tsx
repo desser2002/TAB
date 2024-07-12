@@ -6,6 +6,10 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 interface LoginForm {
   username: string;
@@ -17,6 +21,7 @@ const LoginPage: React.FC = () => {
     username: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,9 +31,12 @@ const LoginPage: React.FC = () => {
     });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // Normally, you'd handle the login logic here or dispatch an action if using Redux/Context
     console.log("Login Attempt:", loginForm);
     alert("Login Attempt with Username: " + loginForm.username);
   };
@@ -38,10 +46,10 @@ const LoginPage: React.FC = () => {
       component="main"
       maxWidth="xs"
       sx={{
-        height: "100vh", // Make Container full viewport height
+        height: "100vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center", // Center vertically
+        justifyContent: "center",
       }}
     >
       <Box
@@ -75,11 +83,24 @@ const LoginPage: React.FC = () => {
             fullWidth
             name="password"
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             autoComplete="current-password"
             value={loginForm.password}
             onChange={handleInputChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={togglePasswordVisibility}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <Button
             type="submit"
