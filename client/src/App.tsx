@@ -6,6 +6,7 @@ import SearchPage from "./pages/SearchPage";
 import JobOfferPage from "./pages/JobOfferPage";
 import ApplyPage from "./pages/ApplyPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 const App: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <Route path="/apply/:offerId" element={<ApplyPage />} /> // New route
         for applying
         <Route path="/login" element={<LoginPage />} /> //
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </Router>
   );

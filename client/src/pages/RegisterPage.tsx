@@ -11,6 +11,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Alert from "@mui/material/Alert";
+import { registerUser } from "../utils/addUser";
+// Убедитесь, что путь корректен
 
 interface RegistrationForm {
   username: string;
@@ -45,14 +47,24 @@ const RegisterPage: React.FC = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (form.password !== form.confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
-    console.log("Registration Form Data:", form);
-    alert("Registration Successful!");
+
+    try {
+      const data = { username: form.username, password: form.password };
+      const result = await registerUser(data);
+      alert(`Registration Successful! Your User ID is ${result.userId}`);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+    }
   };
 
   return (
