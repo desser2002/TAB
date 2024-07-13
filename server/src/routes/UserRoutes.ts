@@ -7,5 +7,6 @@ const router = express.Router();
 
 // Маршрут регистрации пользователя
 router.post('/register', UserController.registerUser);
+router.post('/login', UserController.loginUser);
 
 export default router;
