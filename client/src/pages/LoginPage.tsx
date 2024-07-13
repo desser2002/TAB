@@ -1,5 +1,5 @@
 import React, { useState, FormEvent } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { loginUser } from "../utils/loginUser";
 
 interface LoginForm {
   username: string;
@@ -22,6 +23,8 @@ const LoginPage: React.FC = () => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,16 +32,31 @@ const LoginPage: React.FC = () => {
       ...loginForm,
       [name]: value,
     });
+    if (error) setError(null);
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log("Login Attempt:", loginForm);
-    alert("Login Attempt with Username: " + loginForm.username);
+
+    try {
+      const data = {
+        username: loginForm.username,
+        password: loginForm.password,
+      };
+      const result = await loginUser(data);
+      alert(`Login Successful! Your User ID is ${result.userId}`);
+      navigate("/"); // Перенаправление на главную страницу
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+    }
   };
 
   return (
@@ -110,6 +128,11 @@ const LoginPage: React.FC = () => {
           >
             Confirm
           </Button>
+          {error && (
+            <Typography color="error" variant="body2">
+              {error}
+            </Typography>
+          )}
           <Link component={RouterLink} to="/register" variant="body2">
             {"Don't have an account? Register"}
           </Link>
