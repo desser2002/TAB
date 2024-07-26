@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -7,19 +7,17 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Header from "./Header";
 import { fetchUserIdBySessionId } from "../utils/UserIdBySessionid";
-// Импортируем функцию
 
 const StyledHeader: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate(); // Используем хук useNavigate
 
   useEffect(() => {
     const initUserData = async () => {
-      // Получаем sessionID из localStorage
       const sessionId = localStorage.getItem("sessionID");
       if (sessionId) {
-        // Запрашиваем userId по sessionId
         const fetchedUserId = await fetchUserIdBySessionId(sessionId);
         setUserId(fetchedUserId);
       }
@@ -41,6 +39,7 @@ const StyledHeader: React.FC = () => {
     localStorage.removeItem("sessionID"); // Очищаем sessionID при выходе
     setUserId(null); // Очищаем userId
     handleClose();
+    navigate("/login"); // Перенаправляем на страницу логина
   };
 
   return (

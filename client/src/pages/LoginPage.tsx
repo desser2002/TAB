@@ -48,7 +48,6 @@ const LoginPage: React.FC = () => {
       };
       const result = await loginUser(data);
       localStorage.setItem("sessionID", result.sessionID); // Сохранение ID сессии
-      alert(`Login Successful! Your User ID is ${result.userId}`);
       navigate("/"); // Перенаправление на главную страницу
     } catch (error) {
       if (error instanceof Error) {
