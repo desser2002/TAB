@@ -3,11 +3,12 @@ import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
-import fileRoutes from './routes/fileRoutes'; // Импорт нового файла маршрутов
+import fileRoutes from './routes/fileRoutes';
 import jobRoutes from './routes/JobRoutes';
 import companyRoutes from './routes/CompanyRoutes';
-import userRoutes from './routes/UserRoutes';  // Импорт маршрутов пользователя
+import userRoutes from './routes/UserRoutes';
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
 
 const app: express.Express = express();
 const port: number = 3000;
@@ -22,10 +23,16 @@ if (!fs.existsSync(uploadDir)) {
 
 app.use(cors());
 app.use(express.json());
+
+// Настройка сессий
 app.use(session({
   secret: 'verysecretvalue',  // Установите секретное значение для подписания Cookie
   resave: false,              // Не сохранять сессию, если она не изменена
   saveUninitialized: false,   // Не сохранять "пустую" сессию
+  store: MongoStore.create({
+    mongoUrl: 'mongodb://localhost/yourdbname', // Укажите URL вашего MongoDB
+    collectionName: 'sessions', // Имя коллекции для хранения сессий
+  }),
   cookie: {
     httpOnly: true,           // Недоступен через JavaScript на клиенте
     secure: false,            // Для разработки, установите в true, если используете HTTPS
