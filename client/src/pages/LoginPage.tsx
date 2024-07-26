@@ -41,13 +41,13 @@ const LoginPage: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
     try {
       const data = {
         username: loginForm.username,
         password: loginForm.password,
       };
       const result = await loginUser(data);
+      localStorage.setItem("sessionID", result.sessionID); // Сохранение ID сессии
       alert(`Login Successful! Your User ID is ${result.userId}`);
       navigate("/"); // Перенаправление на главную страницу
     } catch (error) {

@@ -32,7 +32,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const { username, password } = req.body;
 
-    // Проверка на существование пользователя
+    // Поиск пользователя по имени пользователя
     const existingUser = await User.findOne({ username });
     if (!existingUser) {
       res.status(409).json({ message: 'Такого пользователя не существует' });
@@ -45,9 +45,17 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Возврат ID пользователя в ответе
-    res.status(200).json({ message: 'Пользователь успешно вошел в систему', userId: existingUser._id });
+    // Установка userId в сессию
+    (req.session as any).userId = existingUser._id.toString();
+
+    // Возвращение успешного сообщения с userId и номером сессии
+    res.status(200).json({
+      message: 'Пользователь успешно вошел в систему',
+      userId: existingUser._id.toString(),
+      sessionID: req.sessionID  // Добавление идентификатора сессии в ответ
+    });
   } catch (error) {
     res.status(500).json({ message: 'Ошибка при входе в систему', error });
   }
 };
+

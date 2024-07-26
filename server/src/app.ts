@@ -7,12 +7,12 @@ import fileRoutes from './routes/fileRoutes'; // Импорт нового фа�
 import jobRoutes from './routes/JobRoutes';
 import companyRoutes from './routes/CompanyRoutes';
 import userRoutes from './routes/UserRoutes';  // Импорт маршрутов пользователя
+import session from 'express-session';
 
 const app: express.Express = express();
 const port: number = 3000;
 const uploadDir = path.join(__dirname, 'uploads');
 
-// Проверяем, существует ли директория, и создаем ее, если необходимо
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
     console.log(`Directory created at ${uploadDir}`);
@@ -22,11 +22,21 @@ if (!fs.existsSync(uploadDir)) {
 
 app.use(cors());
 app.use(express.json());
+app.use(session({
+  secret: 'verysecretvalue',  // Установите секретное значение для подписания Cookie
+  resave: false,              // Не сохранять сессию, если она не изменена
+  saveUninitialized: false,   // Не сохранять "пустую" сессию
+  cookie: {
+    httpOnly: true,           // Недоступен через JavaScript на клиенте
+    secure: false,            // Для разработки, установите в true, если используете HTTPS
+    maxAge: 1000 * 60 * 60 * 24 // Длительность сессии в миллисекундах (здесь: один день)
+  }
+}));
 
 app.use('/api', jobRoutes);
 app.use('/api', companyRoutes);
-app.use('/api/files', fileRoutes); // Использование нового файла маршрутов
-app.use('/api/users', userRoutes); // Использование правильного файла маршрутов пользователя
+app.use('/api/files', fileRoutes);
+app.use('/api/users', userRoutes);
 
 mongoose.connect('mongodb://localhost/yourdbname', {})
   .then(() => {
