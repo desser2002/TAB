@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import User from '../models/User';
 import MongoStore from 'connect-mongo';
+import { User } from "../models/User"
 
 // Получение доступа к хранилищу сессий
 const mongoStore = MongoStore.create({

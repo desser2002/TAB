@@ -9,6 +9,7 @@ import companyRoutes from './routes/CompanyRoutes';
 import userRoutes from './routes/UserRoutes';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import ApplicationRoutes from './routes/ApplicationRoutes';
 
 const app: express.Express = express();
 const port: number = 3000;
@@ -44,6 +45,7 @@ app.use('/api', jobRoutes);
 app.use('/api', companyRoutes);
 app.use('/api/files', fileRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/apply', ApplicationRoutes);
 
 mongoose.connect('mongodb://localhost/yourdbname', {})
   .then(() => {
