@@ -1,11 +1,6 @@
 import React from "react";
 import MainPage from "./pages/MainPage";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CreateJobOffer from "./pages/CreateJobOffer";
 import SearchPage from "./pages/SearchPage";
 import JobOfferPage from "./pages/JobOfferPage";
