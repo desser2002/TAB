@@ -9,6 +9,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AuthGuard from "./components/AuthGuard";
 import PersonalPage from "./pages/PersonalPage";
+import AppAdminPage from "./pages/AppAdminPage";
+import AddUniversityPage from "./pages/AddUniversityPage";
 
 const App: React.FC = () => {
   return (
@@ -27,6 +29,11 @@ const App: React.FC = () => {
                 <Route path="/offer/:offerId" element={<JobOfferPage />} />
                 <Route path="/apply/:offerId" element={<ApplyPage />} />
                 <Route path="/profile/:userid" element={<PersonalPage />} />
+                <Route path="/admin" element={<AppAdminPage />} />
+                <Route
+                  path="/admin/instituion"
+                  element={<AddUniversityPage />}
+                />
               </Routes>
             </AuthGuard>
           }
