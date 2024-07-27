@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import StyledHeader from "../components/StyledHeader";
 import { getJobOffer } from "../utils/getJobOfferDetails";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Button } from "@mui/material";
 import { JobOffer } from "../utils/getJobOffers";
 import { getCompanyName } from "../utils/getCompanyName";
 
@@ -11,7 +11,7 @@ const JobOfferPage: React.FC = () => {
   const [jobOffer, setJobOffer] = useState<JobOffer | null>(null);
   const [companyName, setCompanyName] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchJobOfferAndCompany = async () => {
       if (offerId) {
@@ -38,6 +38,11 @@ const JobOfferPage: React.FC = () => {
     return <Typography variant="h5">Loading...</Typography>;
   }
 
+  const handleApply = () => {
+    // Implementation for application logic goes here
+    navigate(`/apply/${offerId}`);
+  };
+
   return (
     <>
       <StyledHeader />
@@ -62,6 +67,9 @@ const JobOfferPage: React.FC = () => {
             <Typography variant="overline" display="block" gutterBottom>
               Company: {companyName}
             </Typography>
+            <Button variant="contained" color="primary" onClick={handleApply}>
+              Apply
+            </Button>
           </>
         )}
       </Box>

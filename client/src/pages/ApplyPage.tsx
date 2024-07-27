@@ -7,52 +7,74 @@ import {
   Box,
   LinearProgress,
 } from "@mui/material";
+import { Apply } from "../utils/Apply";
+import { fetchUserIdBySessionId } from "../utils/UserIdBySessionid";
+import { uploadFile } from "../utils/Upload_file";
 
 const ApplyPage: React.FC = () => {
   const { offerId } = useParams<{ offerId: string }>();
+  const [email, setEmail] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [cvUrl, setCvUrl] = useState<string>("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Form submitted");
-    // Further processing can be added here
-  };
+    const sessionId = localStorage.getItem("sessionID");
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files ? event.target.files[0] : null;
-    if (file) {
-      setFileName(file.name);
-      // Here you can also handle file upload logic and update progress
-      setUploadProgress(0); // Reset progress or start a fake progress update
-      fakeUpload(file);
+    if (sessionId && offerId) {
+      const fetchedUserId = await fetchUserIdBySessionId(sessionId);
+      try {
+        const data = {
+          cv_url: cvUrl,
+          email: email,
+          user: fetchedUserId,
+          job: offerId, // Используем offerId из параметров маршрута
+        };
+        const result = await Apply(data);
+        console.log(result);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.log(error.message);
+        } else {
+          console.log("An unknown error occurred");
+        }
+      }
     }
   };
 
-  const fakeUpload = (file: File) => {
-    const interval = setInterval(() => {
-      setUploadProgress((oldProgress) => {
-        if (oldProgress === 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        const diff = Math.random() * 20;
-        return Math.min(oldProgress + diff, 100);
-      });
-    }, 500);
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      setFileName(file.name);
+      setUploadProgress(0); // Reset progress
+      try {
+        const url = await uploadFile(file);
+        setCvUrl(url);
+        setUploadProgress(100);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    }
   };
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
       <Typography variant="h6">Apply for Job</Typography>
-      <TextField label="Name" required fullWidth sx={{ mt: 2 }} />
-      <TextField label="Email" type="email" required fullWidth sx={{ mt: 2 }} />
       <TextField
-        label="Cover Letter"
-        multiline
-        rows={4}
+        label="Email"
+        type="email"
+        required
         fullWidth
         sx={{ mt: 2 }}
+        value={email}
+        onChange={handleEmailChange}
       />
       <Button variant="contained" component="label" sx={{ mt: 2 }}>
         Upload CV
