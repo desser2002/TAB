@@ -41,6 +41,9 @@ const StyledHeader: React.FC = () => {
     handleClose();
     navigate("/login"); // Перенаправляем на страницу логина
   };
+  const handleMyProfile = () => {
+    navigate(`/profile/${userId}`);
+  };
 
   return (
     <Header>
@@ -56,6 +59,7 @@ const StyledHeader: React.FC = () => {
           <AccountCircleIcon fontSize="large" />
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <MenuItem onClick={handleMyProfile}>My Profile</MenuItem>
           <MenuItem onClick={handleClose}>
             {userId ? `User ID: ${userId}` : "Not logged in"}
           </MenuItem>

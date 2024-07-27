@@ -8,6 +8,7 @@ import ApplyPage from "./pages/ApplyPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AuthGuard from "./components/AuthGuard";
+import PersonalPage from "./pages/PersonalPage";
 
 const App: React.FC = () => {
   return (
@@ -25,6 +26,7 @@ const App: React.FC = () => {
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/offer/:offerId" element={<JobOfferPage />} />
                 <Route path="/apply/:offerId" element={<ApplyPage />} />
+                <Route path="/profile/:userid" element={<PersonalPage />} />
               </Routes>
             </AuthGuard>
           }
