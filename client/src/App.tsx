@@ -11,6 +11,7 @@ import AuthGuard from "./components/AuthGuard";
 import PersonalPage from "./pages/PersonalPage";
 import AppAdminPage from "./pages/AppAdminPage";
 import AddUniversityPage from "./pages/AddUniversityPage";
+import CreateCompanyForm from "./pages/CreateCompany";
 
 const App: React.FC = () => {
   return (
@@ -30,6 +31,8 @@ const App: React.FC = () => {
                 <Route path="/apply/:offerId" element={<ApplyPage />} />
                 <Route path="/profile/:userid" element={<PersonalPage />} />
                 <Route path="/admin" element={<AppAdminPage />} />
+                <Route path="/create-company" element={<CreateCompanyForm />} />
+
                 <Route
                   path="/admin/instituion"
                   element={<AddUniversityPage />}
