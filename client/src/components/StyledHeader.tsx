@@ -35,11 +35,16 @@ const StyledHeader: React.FC = () => {
   };
 
   const handleLogout = () => {
-    console.log("Logout functionality here");
     localStorage.removeItem("sessionID"); // Очищаем sessionID при выходе
     setUserId(null); // Очищаем userId
     handleClose();
     navigate("/login"); // Перенаправляем на страницу логина
+  };
+  const handleMyProfile = () => {
+    navigate(`/profile/${userId}`);
+  };
+  const handleCreateCompany = () => {
+    navigate(`/create-company`);
   };
 
   return (
@@ -56,9 +61,11 @@ const StyledHeader: React.FC = () => {
           <AccountCircleIcon fontSize="large" />
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <MenuItem onClick={handleMyProfile}>My Profile</MenuItem>
           <MenuItem onClick={handleClose}>
             {userId ? `User ID: ${userId}` : "Not logged in"}
           </MenuItem>
+          <MenuItem onClick={handleCreateCompany}>Create Company</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </div>
