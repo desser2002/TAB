@@ -1,4 +1,4 @@
-import { University } from "../models/UniversityController";
+import { University } from "../models/University";
 import { Request, Response } from 'express';
 
 export const createUniversity = async (req:Request, res:Response)=>{

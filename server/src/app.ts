@@ -10,7 +10,8 @@ import userRoutes from './routes/UserRoutes';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import ApplicationRoutes from './routes/ApplicationRoutes';
-import  UniversityRoutes from './routes/UniversityRoutes';
+import UniversityRoutes from './routes/UniversityRoutes';
+import AdminRoutes from './routes/AdminRoutes'
 
 const app: express.Express = express();
 const port: number = 3000;
@@ -48,7 +49,7 @@ app.use('/api/files', fileRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/apply', ApplicationRoutes);
 app.use('/api/university', UniversityRoutes);
-
+app.use('/api/admins', AdminRoutes);
 
 mongoose.connect('mongodb://localhost/yourdbname', {})
   .then(() => {

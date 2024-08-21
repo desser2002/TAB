@@ -8,6 +8,8 @@ import {
   MenuItem,
 } from "@mui/material";
 import { Company } from "../types/Company";
+import { createCompany } from "../utils/CreateCompany";
+// Импортируем функцию из сервисного модуля
 
 const industryOptions = [
   { value: "tech", label: "Technology" },
@@ -17,11 +19,13 @@ const industryOptions = [
 ];
 
 const CreateCompanyForm: React.FC = () => {
-  const [formData, setFormData] = useState<Company>({
+  const initialFormData: Company = {
     name: "",
     location: "",
     industry: "",
-  });
+  };
+
+  const [formData, setFormData] = useState<Company>(initialFormData);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -30,10 +34,17 @@ const CreateCompanyForm: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Здесь можно добавить логику для отправки данных на сервер
-    console.log("Company Data:", formData);
+    try {
+      const response = await createCompany(formData);
+      console.log("Company created successfully:", response);
+      setFormData(initialFormData); // Очистка формы после успешной отправки
+      // Здесь можно добавить логику для отображения сообщения об успехе
+    } catch (error) {
+      console.error("Error creating company:", error);
+      // Здесь можно добавить логику для отображения ошибки
+    }
   };
 
   return (
