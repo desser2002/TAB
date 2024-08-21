@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { Company } from "../types/Company";
 import { createCompany } from "../utils/CreateCompany";
+import { fetchUserIdBySessionId } from "../utils/UserIdBySessionid";
 // Импортируем функцию из сервисного модуля
 
 const industryOptions = [
@@ -36,14 +37,19 @@ const CreateCompanyForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await createCompany(formData);
-      console.log("Company created successfully:", response);
-      setFormData(initialFormData); // Очистка формы после успешной отправки
-      // Здесь можно добавить логику для отображения сообщения об успехе
-    } catch (error) {
-      console.error("Error creating company:", error);
-      // Здесь можно добавить логику для отображения ошибки
+    const sessionId = localStorage.getItem("sessionID");
+    if (sessionId) {
+      const fetchedUserId = await fetchUserIdBySessionId(sessionId);
+
+      try {
+        const response = await createCompany(formData, fetchedUserId);
+        console.log("Company created successfully:", response);
+        setFormData(initialFormData); // Очистка формы после успешной отправки
+        // Здесь можно добавить логику для отображения сообщения об успехе
+      } catch (error) {
+        console.error("Error creating company:", error);
+        // Здесь можно добавить логику для отображения ошибки
+      }
     }
   };
 

@@ -6,10 +6,10 @@ import { Admin } from "../models/Admin";
 
 // Создание нового администратора
 export const createAdmin = async (req: Request, res: Response) => {
-  try {
-    const { userId, companyIds } = req.body;
 
-    // Проверка наличия пользователя
+  try {
+    
+    const { userId, companyIds } = req.body;
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });

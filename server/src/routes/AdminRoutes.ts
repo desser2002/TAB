@@ -4,7 +4,7 @@ import { createAdmin, findAdminsByCompanyId, findCompaniesByUserId } from '../co
 const router = express.Router();
 
 // Роут для создания нового администратора
-router.post('/admin', createAdmin);
+router.post('/create', createAdmin);
 
 // Роут для поиска ID кампаний по ID пользователя
 router.get('/admin/companies/:userId', findCompaniesByUserId);
