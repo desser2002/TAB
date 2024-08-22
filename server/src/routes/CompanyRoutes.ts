@@ -6,6 +6,7 @@ const router = express.Router();
 
 // Маршрут для получения названия компании по ID
 router.get('/company/:id', CompanyController.getCompanyNameById);
+router.get('/company/info/:id', CompanyController.getCompanyIndoById);
 
 // Маршрут для создания новой компании
 router.post('/company/add', CompanyController.createCompany);

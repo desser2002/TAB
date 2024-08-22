@@ -44,7 +44,7 @@ const StyledHeader: React.FC = () => {
     navigate(`/profile/${userId}`);
   };
   const handleCreateCompany = () => {
-    navigate(`/create-company`);
+    navigate(`/my-company`);
   };
 
   return (
@@ -65,7 +65,7 @@ const StyledHeader: React.FC = () => {
           <MenuItem onClick={handleClose}>
             {userId ? `User ID: ${userId}` : "Not logged in"}
           </MenuItem>
-          <MenuItem onClick={handleCreateCompany}>Create Company</MenuItem>
+          <MenuItem onClick={handleCreateCompany}>My Companys</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </div>
