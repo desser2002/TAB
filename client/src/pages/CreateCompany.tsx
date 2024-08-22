@@ -24,6 +24,7 @@ const CreateCompanyForm: React.FC = () => {
     name: "",
     location: "",
     industry: "",
+    id: "",
   };
 
   const [formData, setFormData] = useState<Company>(initialFormData);

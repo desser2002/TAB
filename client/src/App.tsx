@@ -12,6 +12,8 @@ import PersonalPage from "./pages/PersonalPage";
 import AppAdminPage from "./pages/AppAdminPage";
 import AddUniversityPage from "./pages/AddUniversityPage";
 import CreateCompanyForm from "./pages/CreateCompany";
+import MyCompaniesPage from "./pages/MyCompanies";
+import CompanyDetailsPage from "./pages/CompanyDetailsPage";
 
 const App: React.FC = () => {
   return (
@@ -32,10 +34,14 @@ const App: React.FC = () => {
                 <Route path="/profile/:userid" element={<PersonalPage />} />
                 <Route path="/admin" element={<AppAdminPage />} />
                 <Route path="/create-company" element={<CreateCompanyForm />} />
-
+                <Route path="/my-company" element={<MyCompaniesPage />} />
                 <Route
                   path="/admin/instituion"
                   element={<AddUniversityPage />}
+                />
+                <Route
+                  path="/company/:companyId"
+                  element={<CompanyDetailsPage />}
                 />
               </Routes>
             </AuthGuard>

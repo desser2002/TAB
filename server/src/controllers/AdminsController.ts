@@ -36,15 +36,23 @@ export const findCompaniesByUserId = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
 
-    // Поиск администратора по ID пользователя
-    const admin = await Admin.findOne({ userId }).populate("companyIds");
+    // Find all admins by userId and populate the associated companies
+    const admins = await Admin.find({ userId }).populate({
+      path: 'companyIds', // The field that references companies
+      model: 'Company'    // The model being populated
+    });
 
-    if (!admin) {
-      return res.status(404).json({ message: "Admin not found" });
+    if (!admins || admins.length === 0) {
+      return res.status(404).json({ message: "Admins not found" });
     }
 
-    res.status(200).json(admin.companyIds);
+    // Extract all company details from all found admins
+    const companies = admins.flatMap(admin => admin.companyIds);
+
+    // Return the fully populated company details
+    res.status(200).json(companies);
   } catch (error) {
+    console.error("Error fetching companies:", error);
     res.status(500).json({ message: "Server error", error });
   }
 };

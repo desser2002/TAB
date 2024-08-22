@@ -3,14 +3,24 @@ import { Company, ICompany } from '../models/Company';
 
 // Функция для получения названия компании по ID
 export const getCompanyNameById = async (req: Request, res: Response) => {
-
-
   try {
     const company = await Company.findById(req.params.id).exec();
     if (!company) {
       return res.status(404).send({ message: "Company not found" });
     }
     res.status(200).send({ companyName: company.name });
+  } catch (error) {
+    res.status(500).send({ message: "Error retrieving company", error });
+  }
+};
+
+export const getCompanyIndoById = async (req: Request, res: Response) => {
+  try {
+    const company = await Company.findById(req.params.id).exec();
+    if (!company) {
+      return res.status(404).send({ message: "Company not found" });
+    }
+    res.status(200).send( company );
   } catch (error) {
     res.status(500).send({ message: "Error retrieving company", error });
   }

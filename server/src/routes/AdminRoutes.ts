@@ -7,8 +7,8 @@ const router = express.Router();
 router.post('/create', createAdmin);
 
 // Роут для поиска ID кампаний по ID пользователя
-router.get('/admin/companies/:userId', findCompaniesByUserId);
-router.get('/admins/company/:companyId', findAdminsByCompanyId);
+router.get('/companies/:userId', findCompaniesByUserId);
+router.get('/company/:companyId', findAdminsByCompanyId);
 
 
 
