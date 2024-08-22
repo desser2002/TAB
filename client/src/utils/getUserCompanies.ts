@@ -15,8 +15,14 @@ export const fetchCompaniesByUserId = async (userId: string): Promise<Company[]>
 
     const data = await response.json();
 
-    // Если ваши данные приходят в формате { company: { ...companyData } }, нужно развернуть объект
-    const companies = data.map((item: any) => item.company ? item.company : item);
+    // Преобразуем данные, чтобы _id записывался в id
+    const companies = data.map((item: any) => {
+      const company = item.company ? item.company : item;
+      return {
+        ...company,
+        id: company._id,  // Переносим значение _id в id
+      };
+    });
 
     return companies as Company[];
   } catch (error) {

@@ -32,8 +32,7 @@ const CompanyDetailsPage: FC = () => {
   const handleAddAdmin = async () => {
     if (companyId) {
       try {
-        await addUsertoAdmins(companyId, userId);
-        alert("Admin added successfully!");
+        await addUsertoAdmins(userId, companyId);
       } catch (error) {
         console.error("Failed to add admin:", error);
       }

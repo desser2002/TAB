@@ -6,16 +6,14 @@ import { Admin } from "../models/Admin";
 
 // Создание нового администратора
 export const createAdmin = async (req: Request, res: Response) => {
-
   try {
-    
     const { userId, companyIds } = req.body;
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Проверка наличия компаний
+    // Проверка наличия компаний по _id
     const companies = await Company.find({ _id: { $in: companyIds } });
     if (companies.length !== companyIds.length) {
       return res.status(404).json({ message: "No companies found" });
@@ -30,6 +28,7 @@ export const createAdmin = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
+
 
 // Поиск ID кампаний по ID пользователя
 export const findCompaniesByUserId = async (req: Request, res: Response) => {

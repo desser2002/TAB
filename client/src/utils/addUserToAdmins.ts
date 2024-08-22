@@ -5,7 +5,7 @@ export const addUsertoAdmins = async (userId: string, companyId: string): Promis
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userId, companyId }),
+            body: JSON.stringify({ userId, companyIds: [companyId] }), // Исправлено: передаем companyIds как массив
         });
 
         if (!response.ok) {
