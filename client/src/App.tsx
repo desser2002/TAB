@@ -14,6 +14,9 @@ import AddUniversityPage from "./pages/AddUniversityPage";
 import CreateCompanyForm from "./pages/CreateCompany";
 import MyCompaniesPage from "./pages/MyCompanies";
 import CompanyDetailsPage from "./pages/CompanyDetailsPage";
+import CompanyPage from "./pages/CompanyPage";
+import ViewApplys from "./pages/ViewApplys";
+import CompanyJobsPage from "./pages/CompanyJobsPage";
 
 const App: React.FC = () => {
   return (
@@ -27,7 +30,10 @@ const App: React.FC = () => {
             <AuthGuard>
               <Routes>
                 <Route path="/" element={<MainPage />} />
-                <Route path="/create-job-offer" element={<CreateJobOffer />} />
+                <Route
+                  path="/create-job-offer/:companyId"
+                  element={<CreateJobOffer />}
+                />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/offer/:offerId" element={<JobOfferPage />} />
                 <Route path="/apply/:offerId" element={<ApplyPage />} />
@@ -35,13 +41,22 @@ const App: React.FC = () => {
                 <Route path="/admin" element={<AppAdminPage />} />
                 <Route path="/create-company" element={<CreateCompanyForm />} />
                 <Route path="/my-company" element={<MyCompaniesPage />} />
+                <Route path="/view-applys" element={<ViewApplys />} />
+                <Route
+                  path="/company-admin/:companyId"
+                  element={<CompanyPage />}
+                />
                 <Route
                   path="/admin/instituion"
                   element={<AddUniversityPage />}
                 />
                 <Route
-                  path="/company/:companyId"
+                  path="/user-management/:companyId"
                   element={<CompanyDetailsPage />}
+                />
+                <Route
+                  path="/company-jobs/:companyId"
+                  element={<CompanyJobsPage />}
                 />
               </Routes>
             </AuthGuard>

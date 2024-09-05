@@ -8,7 +8,7 @@ export const getCompanyNameById = async (req: Request, res: Response) => {
     if (!company) {
       return res.status(404).send({ message: "Company not found" });
     }
-    res.status(200).send({ companyName: company.name });
+    res.status(200).send(company.name);
   } catch (error) {
     res.status(500).send({ message: "Error retrieving company", error });
   }

@@ -35,3 +35,18 @@ export const getAllOffers = async (req:Request, res: Response): Promise<void> =>
         res.status(500).send("Failed to fetch job. Error: " + error.message);
     }
 };
+export const getOffersByCompanyId = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { companyId } = req.params;
+    const jobs = await Job.find({ company: companyId }); // Fetch all jobs for a specific company
+
+    if (jobs.length === 0) {
+      res.status(404).send("No jobs found for this company");
+      return;
+    }
+
+    res.json(jobs); // Send the retrieved jobs as a JSON response
+  } catch (error) {
+    res.status(500).send("Failed to fetch jobs. Error: " + error.message);
+  }
+};

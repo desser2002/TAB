@@ -1,5 +1,3 @@
-import { Company } from "../types/Company";
-
 export const getCompanyName = async (id: string): Promise<string> => {
     try {
         // Correct usage of template literals to include the id in the URL
@@ -13,9 +11,9 @@ export const getCompanyName = async (id: string): Promise<string> => {
             throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
         }
 
-        const company: Company = await response.json(); // Parse JSON only once
-        console.log('Success:', company);
-        return company.name; // Return the parsed job offer directly
+        const companyName = await response.text(); // Now we expect plain text, not JSON
+        console.log('Success:', companyName);
+        return companyName; // Return the company name directly
     } catch (error) {
         console.error('Error:', error);
         throw error; // Re-throw the error so it can be handled further up the call stack if necessary

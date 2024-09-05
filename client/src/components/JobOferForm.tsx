@@ -1,7 +1,5 @@
 import React from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { Box } from "@mui/system";
+import { TextField, Button, Box, Typography } from "@mui/material";
 import { submitJobForm } from "../utils/submitJobForm";
 import {
   FormControl,
@@ -10,6 +8,7 @@ import {
   MenuItem,
   SelectChangeEvent,
 } from "@mui/material";
+import { useParams } from "react-router-dom";
 
 interface FormData {
   title: string;
@@ -22,13 +21,15 @@ interface FormData {
 }
 
 const JobForm: React.FC = () => {
+  const { companyId } = useParams<{ companyId: string }>(); // Get companyId from URL
+
   const [formData, setFormData] = React.useState<FormData>({
     title: "",
     short_description: "",
     full_description: "",
     location: "",
     salary: 0,
-    company: "664c5b4b66a54cd11e8bf2fd",
+    company: companyId || "", // Set companyId from URL
     publication_date: new Date(),
   });
 
@@ -38,6 +39,7 @@ const JobForm: React.FC = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -52,7 +54,7 @@ const JobForm: React.FC = () => {
       full_description: "",
       location: "",
       salary: 0,
-      company: "664c5b4b66a54cd11e8bf2fd",
+      company: companyId || "", // Reset companyId from URL
       publication_date: new Date(),
     }); // Clear Form
   };
@@ -69,6 +71,11 @@ const JobForm: React.FC = () => {
         onSubmit={handleSubmit}
         style={{ width: "50vw", textAlign: "center" }}
       >
+        {/* Heading for the form */}
+        <Typography variant="h4" sx={{ marginBottom: 4 }}>
+          New Job Offer
+        </Typography>
+
         <TextField
           fullWidth
           name="title"
@@ -131,7 +138,12 @@ const JobForm: React.FC = () => {
             shrink: true,
           }}
         />
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          sx={{ mt: 2 }}
+        >
           Create Job Offer
         </Button>
       </form>

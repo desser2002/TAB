@@ -6,8 +6,9 @@ import {
   Container,
   Box,
   CircularProgress,
+  Button,
 } from "@mui/material";
-import { Link } from "react-router-dom"; // Импортируем Link из react-router-dom
+import { Link } from "react-router-dom";
 import StyledHeader from "../components/StyledHeader";
 import { fetchCompaniesByUserId } from "../utils/getUserCompanies";
 import { Company } from "../types/Company";
@@ -25,6 +26,7 @@ const MyCompaniesPage: FC = () => {
         try {
           const companyData = await fetchCompaniesByUserId(fetchedUserId);
           setCompanies(companyData);
+          console.log(companies);
         } catch (error) {
           console.error("Failed to load companies:", error);
         } finally {
@@ -42,12 +44,25 @@ const MyCompaniesPage: FC = () => {
       <Container
         maxWidth="md"
         sx={{
-          marginTop: 16, // Add top margin to prevent overlap
+          marginTop: 16,
         }}
       >
         <Typography variant="h4" sx={{ marginBottom: 4 }}>
           My Companies
         </Typography>
+
+        {/* Add "Create New Company" Button */}
+        <Box sx={{ marginBottom: 4 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            to="/create-company" // Link to the company creation page
+            sx={{ textDecoration: "none", color: "white" }}
+          >
+            Create New Company
+          </Button>
+        </Box>
 
         {loading ? (
           <CircularProgress />
@@ -63,7 +78,7 @@ const MyCompaniesPage: FC = () => {
               companies.map((company) => (
                 <Card key={company.id} variant="outlined">
                   <Link
-                    to={`/company/${company.id}`}
+                    to={`/company-admin/${company.id}`}
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
                     <CardContent>
