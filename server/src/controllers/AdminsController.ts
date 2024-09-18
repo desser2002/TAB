@@ -61,15 +61,49 @@ export const findAdminsByCompanyId = async (req: Request, res: Response) => {
   try {
     const { companyId } = req.params;
 
-    // Поиск администраторов по ID компании
-    const admins = await Admin.find({ companyIds: companyId }).populate("userId");
+    // Поиск администраторов по ID компании с популяцией userId
+    const admins = await Admin.find({ companyIds: companyId }).populate({
+      path: 'userId',
+      select: '_id', // Загружаем только _id для userId
+    });
 
     if (!admins || admins.length === 0) {
       return res.status(404).json({ message: "No admins found for this company" });
     }
 
-    res.status(200).json(admins);
+    // Преобразуем userId в строку (ObjectId не имеет свойства _id)
+    const result = admins.map((admin) => ({
+      ...admin.toObject(), // Преобразуем документ в объект
+      userId: (admin.userId as any)._id.toString(), // Преобразуем ObjectId в строку
+    }));
+
+    // Возвращаем преобразованный результат
+    res.status(200).json(result);
   } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+
+
+
+
+
+// Удаление администратора по ID
+export const deleteAdminById = async (req: Request, res: Response) => {
+  try {
+    const { adminId } = req.params;
+
+    // Поиск администратора по ID и его удаление
+    const admin = await Admin.findByIdAndDelete(adminId);
+
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    res.status(200).json({ message: "Admin deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting admin:", error);
     res.status(500).json({ message: "Server error", error });
   }
 };

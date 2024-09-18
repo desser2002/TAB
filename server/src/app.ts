@@ -12,6 +12,8 @@ import MongoStore from 'connect-mongo';
 import ApplicationRoutes from './routes/ApplicationRoutes';
 import UniversityRoutes from './routes/UniversityRoutes';
 import AdminRoutes from './routes/AdminRoutes';
+import workExperienceRoutes from './routes/workExperienceRoutes'; // Импортируем роутер для работы
+import educationRoutes from './routes/educationRoutes'; // Импортируем роутер для образования
 
 // Инициализация приложения
 const app: express.Express = express();
@@ -55,8 +57,10 @@ app.use('/api/users', userRoutes);
 app.use('/api/apply', ApplicationRoutes);
 app.use('/api/university', UniversityRoutes);
 app.use('/api/admins', AdminRoutes);
+app.use('/api', workExperienceRoutes); // Маршрут для работы
+app.use('/api', educationRoutes); // Маршрут для образования
 
-// Добавление маршрута для скачивания файлов
+// Подключение маршрута для скачивания файлов
 app.get('/download/:filename', (req: Request, res: Response) => {
   const fileName = req.params.filename; // Получаем имя файла из URL
   const filePath = path.join(uploadDir, fileName); // Путь к файлу в папке uploads

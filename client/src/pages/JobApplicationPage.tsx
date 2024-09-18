@@ -44,7 +44,7 @@ const JobApplicationsPage: React.FC = () => {
           ))}
         </Grid>
       ) : (
-        <Typography>Заявки на эту вакансию не найдены.</Typography>
+        <Typography>No applys for this job offer</Typography>
       )}
     </Box>
   );

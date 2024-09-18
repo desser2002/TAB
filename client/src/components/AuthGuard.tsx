@@ -11,7 +11,9 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   }, [navigate]);
 
-  return <>{children}</>;
+  // Если sessionID существует, рендерим дочерние компоненты, иначе возвращаем null
+  const sessionId = localStorage.getItem("sessionID");
+  return sessionId ? <>{children}</> : null;
 };
 
 export default AuthGuard;

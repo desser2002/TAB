@@ -18,6 +18,7 @@ import CompanyPage from "./pages/CompanyPage";
 import ViewApplys from "./pages/ViewApplys";
 import CompanyJobsPage from "./pages/CompanyJobsPage";
 import JobApplicationsPage from "./pages/JobApplicationPage";
+import AddExperiencePage from "./pages/AddExperiencePage"; // Импортируем страницу добавления опыта
 
 const App: React.FC = () => {
   return (
@@ -25,45 +26,133 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        {/* Protected Routes */}
         <Route
-          path="/*"
+          path="/"
           element={
             <AuthGuard>
-              <Routes>
-                <Route path="/" element={<MainPage />} />
-                <Route
-                  path="/create-job-offer/:companyId"
-                  element={<CreateJobOffer />}
-                />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/offer/:offerId" element={<JobOfferPage />} />
-                <Route path="/apply/:offerId" element={<ApplyPage />} />
-                <Route path="/profile/:userid" element={<PersonalPage />} />
-                <Route path="/admin" element={<AppAdminPage />} />
-                <Route path="/create-company" element={<CreateCompanyForm />} />
-                <Route path="/my-company" element={<MyCompaniesPage />} />
-                <Route path="/view-applys" element={<ViewApplys />} />
-                <Route
-                  path="/company-admin/:companyId"
-                  element={<CompanyPage />}
-                />
-                <Route
-                  path="/admin/instituion"
-                  element={<AddUniversityPage />}
-                />
-                <Route
-                  path="/job-apply/:offerid"
-                  element={<JobApplicationsPage />}
-                />
-                <Route
-                  path="/user-management/:companyId"
-                  element={<CompanyDetailsPage />}
-                />
-                <Route
-                  path="/company-jobs/:companyId"
-                  element={<CompanyJobsPage />}
-                />
-              </Routes>
+              <MainPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/create-job-offer/:companyId"
+          element={
+            <AuthGuard>
+              <CreateJobOffer />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <AuthGuard>
+              <SearchPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/offer/:offerId"
+          element={
+            <AuthGuard>
+              <JobOfferPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/apply/:offerId"
+          element={
+            <AuthGuard>
+              <ApplyPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/profile/:userid"
+          element={
+            <AuthGuard>
+              <PersonalPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <AuthGuard>
+              <AppAdminPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/create-company"
+          element={
+            <AuthGuard>
+              <CreateCompanyForm />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/my-company"
+          element={
+            <AuthGuard>
+              <MyCompaniesPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/view-applys"
+          element={
+            <AuthGuard>
+              <ViewApplys />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/company-admin/:companyId"
+          element={
+            <AuthGuard>
+              <CompanyPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/admin/instituion"
+          element={
+            <AuthGuard>
+              <AddUniversityPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/job-apply/:offerid"
+          element={
+            <AuthGuard>
+              <JobApplicationsPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/user-management/:companyId"
+          element={
+            <AuthGuard>
+              <CompanyDetailsPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/company-jobs/:companyId"
+          element={
+            <AuthGuard>
+              <CompanyJobsPage />
+            </AuthGuard>
+          }
+        />
+        {/* Добавляем новый маршрут для страницы добавления опыта */}
+        <Route
+          path="/add-experience"
+          element={
+            <AuthGuard>
+              <AddExperiencePage />
             </AuthGuard>
           }
         />

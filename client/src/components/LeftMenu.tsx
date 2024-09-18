@@ -95,7 +95,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ isOpen, toggleDrawer }) => {
             {/* Display the company name in the menu with 95% margin-top */}
             <ListItem
               sx={{
-                marginTop: "90vh", // Offset of 95% of the viewport height
+                marginTop: "83vh", // Offset of 95% of the viewport height
               }}
             >
               <ListItemText

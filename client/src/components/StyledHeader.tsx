@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Header from "./Header";
@@ -82,11 +81,7 @@ const StyledHeader: React.FC = () => {
             <HomeIcon fontSize="large" />
           </IconButton>
         </Link>
-        <Link to="/create-job-offer">
-          <IconButton aria-label="add" color="primary">
-            <AddCircleIcon fontSize="large" />
-          </IconButton>
-        </Link>
+
         <Link to="/search">
           <IconButton aria-label="search" color="primary">
             <SearchIcon fontSize="large" />

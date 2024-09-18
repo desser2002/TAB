@@ -32,7 +32,6 @@ const CompanyJobsPage: FC = () => {
     };
 
     loadJobs();
-    console.log(jobs);
   }, [companyId]);
 
   return (
@@ -58,14 +57,12 @@ const CompanyJobsPage: FC = () => {
         ) : (
           <Box
             sx={{
-              marginLeft: "5vw",
               display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              alignItems: "flex-start", // Выровняем первый элемент по левому верхнему углу
               minHeight: "90vh",
             }}
           >
-            <Grid container spacing={2}>
+            <Grid container spacing={2} alignItems="flex-start">
               {jobs.length > 0 ? (
                 jobs.map((job, index) => (
                   <Grid item key={index} xs={12} sm={6} md={4}>
