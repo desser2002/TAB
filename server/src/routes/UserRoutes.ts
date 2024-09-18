@@ -9,5 +9,6 @@ const router = express.Router();
 router.post('/register', UserController.registerUser);
 router.post('/login', UserController.loginUser);
 router.get('/session-user/:sessionId', UserController.getUserBySessionId);
+router.get('/user-login/:userId', UserController.getUserLoginById);
 
 export default router;

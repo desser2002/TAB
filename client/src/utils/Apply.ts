@@ -1,6 +1,7 @@
 import { ApplyT } from "../types/Apply";
+import { Apply_make } from "../types/Apply_make";
 
-export const Apply = async (data:ApplyT ) => {
+export const Apply = async (data:Apply_make ): Promise<ApplyT> => {
     const response = await fetch('http://localhost:3000/api/apply/add_apply', {
       method: 'POST',
       headers: {
@@ -8,7 +9,7 @@ export const Apply = async (data:ApplyT ) => {
       },
       body: JSON.stringify(data)
     });
-  console.log(data);
+  
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || 'Something went wrong');

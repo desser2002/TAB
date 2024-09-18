@@ -25,7 +25,7 @@ const JobCardCompanies: React.FC<JobCardProps> = ({ offer }) => {
   const navigate = useNavigate(); // Hook for navigation
 
   const handleApplyClick = () => {
-    navigate(`/offer/${offer._id}`); // Navigates to the detailed offer page
+    navigate(`/job-apply/${offer._id}`); // Navigates to the detailed offer page
   };
   return (
     <Card sx={{ maxWidth: "30vw", marginBottom: 2 }}>

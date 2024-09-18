@@ -1,7 +1,7 @@
 import { FC } from "react";
 import JobForm from "../components/JobOferForm";
 import StyledHeader from "../components/StyledHeader";
-import { Container, Typography, Box } from "@mui/material";
+import { Box } from "@mui/material";
 
 const CreateJobOffer: FC = () => {
   return (

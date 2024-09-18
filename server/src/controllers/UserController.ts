@@ -96,6 +96,25 @@ export const getUserBySessionId = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error });
   }
+  
+};
+export const getUserLoginById = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params; // Extract userId from URL parameters
+
+    // Find user by ID
+    const user = await User.findById(userId).select('username'); // Only select the username field
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Respond with the username
+    res.status(200).json({ username: user.username });
+  } catch (error) {
+    console.error('Error fetching user login:', error);
+    res.status(500).json({ message: 'Server error', error });
+  }
 };
 
   

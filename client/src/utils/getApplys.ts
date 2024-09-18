@@ -1,20 +1,18 @@
-// api/applications.ts
-
 import { ApplyT } from "../types/Apply";
 
-
-export const fetchApplications = async (): Promise<ApplyT[]> => {
+export const getApplicationsByJobId = async (jobId: string): Promise<ApplyT[]> => {
   try {
-    const response = await fetch('http://localhost:3000/api/applications');
-    
+    const response = await fetch(`http://localhost:3000/api/apply/job/${jobId}`);
+
     if (!response.ok) {
-      throw new Error('Failed to fetch applications');
+      throw new Error(`Error fetching applications: ${response.statusText}`);
     }
 
-    const data: ApplyT[] = await response.json();
-    return data;
+    const applications: ApplyT[] = await response.json();
+    console.log(applications)
+    return applications;
   } catch (error) {
     console.error('Error fetching applications:', error);
-    throw error;
+    throw new Error('Failed to fetch applications for this job.');
   }
 };

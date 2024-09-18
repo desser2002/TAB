@@ -17,6 +17,7 @@ import CompanyDetailsPage from "./pages/CompanyDetailsPage";
 import CompanyPage from "./pages/CompanyPage";
 import ViewApplys from "./pages/ViewApplys";
 import CompanyJobsPage from "./pages/CompanyJobsPage";
+import JobApplicationsPage from "./pages/JobApplicationPage";
 
 const App: React.FC = () => {
   return (
@@ -49,6 +50,10 @@ const App: React.FC = () => {
                 <Route
                   path="/admin/instituion"
                   element={<AddUniversityPage />}
+                />
+                <Route
+                  path="/job-apply/:offerid"
+                  element={<JobApplicationsPage />}
                 />
                 <Route
                   path="/user-management/:companyId"
